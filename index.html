@@ -51,7 +51,7 @@
       position: sticky; top: 0; z-index: 40;
       background: rgba(255,255,255,.92);
       backdrop-filter: blur(10px);
-      border-bottom: 0px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
     .nav {
       display: flex; align-items: center; justify-content: space-between;
@@ -69,7 +69,7 @@
     .btn {
       display: inline-flex; align-items: center; justify-content: center;
       min-height: 44px; padding: 0 1.2rem;
-      border: 3px solid var(--ink); background: var(--ink); color: #fff;
+      border: 1px solid var(--ink); background: var(--ink); color: #fff;
       font-size: .8rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
     }
     .btn:hover { background: #000; }
@@ -78,7 +78,7 @@
     }
     .btn-ghost:hover { background: var(--ink); color: #fff; }
 
-    .hero { padding: 4.5rem 0 4rem; border-bottom: 3px solid var(--line); }
+    .hero { padding: 4.5rem 0 4rem; border-bottom: 1px solid var(--line); }
     .hero-grid {
       display: grid; grid-template-columns: 1.15fr .85fr; gap: 3.5rem; align-items: center;
     }
@@ -92,23 +92,23 @@
     .note { font-size: .92rem; }
     .note strong { color: var(--ink); font-weight: 600; }
     .lockup {
-      border: 3px solid var(--line);
+      border: 1px solid var(--line);
       background: var(--wash);
       padding: 2rem 1.5rem 1.5rem;
     }
     .lockup img { width: 100%; max-height: 220px; object-fit: contain; mix-blend-mode: multiply; }
     .lockup-cap {
-      margin-top: 1.1rem; padding-top: 1rem; border-top: 3px solid var(--line);
+      margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--line);
       font-size: .85rem;
     }
     .lockup-cap strong { display: block; color: var(--ink); font-family: var(--serif); font-size: 1.05rem; margin-bottom: .3rem; }
 
-    section { padding: 4.2rem 0; border-bottom: 3px solid var(--line); }
+    section { padding: 4.2rem 0; border-bottom: 1px solid var(--line); }
     .section-head { margin-bottom: 2rem; }
     h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); max-width: 18ch; }
     .split { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     .card {
-      border: 3px solid var(--line);
+      border: 1px solid var(--line);
       padding: 1.5rem 1.4rem 1.6rem;
       background: var(--paper);
     }
@@ -116,7 +116,7 @@
     .tag {
       display: inline-block;
       font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700;
-      border: 3px solid var(--ink); padding: .28rem .55rem;
+      border: 1px solid var(--ink); padding: .28rem .55rem;
     }
     .services { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     .svc { border-top: 2px solid var(--ink); padding: 1.15rem 0 0.4rem; }
@@ -127,26 +127,26 @@
     ol.steps li {
       counter-increment: step;
       display: grid; grid-template-columns: 2.2rem 1fr; gap: .9rem;
-      padding: 1rem 0; border-bottom: 3px solid var(--line);
+      padding: 1rem 0; border-bottom: 1px solid var(--line);
     }
     ol.steps li:last-child { border-bottom: 0; }
     ol.steps li::before {
       content: counter(step);
       width: 2.2rem; height: 2.2rem;
-      border: 3px solid var(--ink);
+      border: 1px solid var(--ink);
       display: grid; place-items: center;
       font-size: .8rem; font-weight: 700;
     }
     ol.steps h3 { font-size: 1rem; font-family: var(--sans); font-weight: 600; margin-bottom: .2rem; }
-    .why { background: var(--wash); border: 3px solid var(--line); padding: 1.5rem; }
+    .why { background: var(--wash); border: 1px solid var(--line); padding: 1.5rem; }
     .why h3 { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 1rem; }
     .why ul { list-style: none; }
-    .why li { padding: .75rem 0; border-bottom: 3px solid var(--line); }
+    .why li { padding: .75rem 0; border-bottom: 1px solid var(--line); }
     .why li:last-child { border-bottom: 0; }
     .why strong { display: block; color: var(--ink); }
 
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
-    .contact-panel { border: 3px solid var(--ink); background: var(--ink); color: #fff; padding: 2rem 1.6rem; }
+    .contact-panel { border: 1px solid var(--ink); background: var(--ink); color: #fff; padding: 2rem 1.6rem; }
     .contact-panel h2, .contact-panel p { color: #fff; }
     .contact-panel p { color: #cfcfcf; }
     .rows { margin: 1.4rem 0 1.6rem; }
@@ -155,7 +155,7 @@
     .row a, .row b { color: #fff; font-weight: 500; }
     .contact-panel .btn { background: #fff; color: #111; border-color: #fff; margin-right: .5rem; margin-top: .4rem; }
     .contact-panel .btn-ghost { background: transparent; color: #fff; border-color: #666; }
-    .side { border: 3px solid var(--line); padding: 2rem 1.6rem; background: var(--wash); }
+    .side { border: 1px solid var(--line); padding: 2rem 1.6rem; background: var(--wash); }
     .side h3 { font-family: var(--serif); font-size: 1.45rem; margin: .7rem 0 .8rem; max-width: 22ch; }
 
     footer {
@@ -209,7 +209,7 @@
           <p class="note"><strong>Two engagement paths:</strong> a clean referral, or white-label delivery billed through your firm.</p>
         </div>
         <aside class="lockup">
-          <img src="WEL CFO v03.png" alt="White Label CFO mark: suited figure with glasses and wordmark" />
+          <img src="WEL CFO v03.jpg" alt="White Label CFO mark: suited figure with glasses and wordmark" />
           <div class="lockup-cap">
             <strong>Finance support that stays behind your name.</strong>
             <p>Built for firms that want to extend the client offering without hiring a full-time finance team.</p>
