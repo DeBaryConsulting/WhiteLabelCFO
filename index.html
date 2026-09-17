@@ -185,6 +185,44 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
     }
+
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 80;
+      background: rgba(17,17,17,.55);
+      display: none; align-items: flex-start; justify-content: center;
+      padding: 4.5rem 1.2rem 2rem; overflow: auto;
+    }
+    .modal-overlay.is-open { display: flex; }
+    .modal {
+      width: min(100%, 520px);
+      background: #fff;
+      border: 3px solid var(--ink);
+      padding: 1.4rem 1.35rem 1.5rem;
+      position: relative;
+    }
+    .modal h2 { font-size: 1.55rem; margin-bottom: .4rem; max-width: none; }
+    .modal .lead-s { font-size: .92rem; margin-bottom: 1.1rem; }
+    .modal-close {
+      position: absolute; top: .7rem; right: .8rem;
+      border: 0; background: none; font-size: 1.4rem; line-height: 1; cursor: pointer; color: var(--ink);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem .75rem; }
+    .field { display: flex; flex-direction: column; gap: .28rem; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+    .req { color: #111; }
+    .opt { color: var(--faint); font-weight: 500; letter-spacing: .08em; }
+    .field input, .field select {
+      min-height: 42px; padding: 0 .7rem;
+      border: 1.5px solid var(--ink); font-family: var(--sans); font-size: .92rem; background: #fff;
+    }
+    .form-error { display: none; color: #8a1f1f; font-size: .85rem; margin: .4rem 0; }
+    .form-error.is-on { display: block; }
+    .modal .btn { width: 100%; margin-top: .6rem; }
+    .form-note { font-size: .8rem; margin-top: .7rem; }
+    @media (max-width: 520px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -201,7 +239,7 @@
         <a href="#process">Process</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a class="btn" href="#contact">Become a Partner</a>
+      <a class="btn js-partner-open" href="#partner-form">Become a Partner</a>
     </div>
   </header>
 
@@ -343,7 +381,7 @@
             </div>
           </div>
           <a class="btn" href="mailto:info@whitelabelcfo.com?subject=White%20Label%20CFO%20Partner%20Inquiry">Email us</a>
-          <a class="btn btn-ghost" href="#partners">See partner options</a>
+          <a class="btn btn-ghost js-partner-open" href="#partner-form">See partner options</a>
         </div>
         <div class="side">
           <span class="tag">Confidential</span>
@@ -354,12 +392,140 @@
     </section>
   </main>
 
+  <div class="modal-overlay" id="partner-modal" role="dialog" aria-modal="true" aria-labelledby="partner-title" hidden>
+    <div class="modal">
+      <button type="button" class="modal-close" id="partner-close" aria-label="Close">&times;</button>
+      <p class="kicker">Partner desk</p>
+      <h2 id="partner-title">Request partner options</h2>
+      <p class="lead-s">Tell us who you are. After you submit, the partner options PDF opens in a new tab and a copy of this request is emailed to us.</p>
+      <form id="partner-form" action="https://formspree.io/f/xkjgnkkn" method="POST">
+        <input type="hidden" name="_subject" value="White Label CFO partner request" />
+        <div class="form-grid">
+          <div class="field">
+            <label for="first_name">First name <span class="req">*</span></label>
+            <input id="first_name" name="first_name" type="text" required autocomplete="given-name" />
+          </div>
+          <div class="field">
+            <label for="last_name">Last name <span class="req">*</span></label>
+            <input id="last_name" name="last_name" type="text" required autocomplete="family-name" />
+          </div>
+          <div class="field full">
+            <label for="business_name">Business name <span class="req">*</span></label>
+            <input id="business_name" name="business_name" type="text" required autocomplete="organization" />
+          </div>
+          <div class="field full">
+            <label for="business_type">Business type <span class="req">*</span></label>
+            <select id="business_type" name="business_type" required>
+              <option value="">Select one</option>
+              <option>Bookkeeper</option>
+              <option>CPA Firm</option>
+              <option>Financial Professional</option>
+              <option>Family Office</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="client_count">Number of clients <span class="opt">optional</span></label>
+            <select id="client_count" name="client_count">
+              <option value="">Select one</option>
+              <option>Under 50 clients</option>
+              <option>50 or more clients</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="opt">optional</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+          <div class="field full">
+            <label for="email">Email address <span class="req">*</span></label>
+            <input id="email" name="email" type="email" required autocomplete="email" />
+          </div>
+        </div>
+        <p class="form-error" id="form-error">Something went wrong sending the form. Check the fields and try again.</p>
+        <button class="btn" type="submit" id="partner-submit">Send and view partner options</button>
+        <p class="form-note">Required fields are marked. We do not share this list.</p>
+      </form>
+    </div>
+  </div>
+
   <footer>
     <div class="wrap foot">
       <span>© 2026 White Label CFO</span>
       <span>whitelabelcfo.com</span>
     </div>
   </footer>
+  <script>
+    (function () {
+      var PDF_URL = "White_Label_CFO_Partner_Options.pdf";
+      var overlay = document.getElementById("partner-modal");
+      var form = document.getElementById("partner-form");
+      var err = document.getElementById("form-error");
+      var submitBtn = document.getElementById("partner-submit");
+
+      function openModal(e) {
+        if (e) e.preventDefault();
+        overlay.hidden = false;
+        overlay.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        var first = document.getElementById("first_name");
+        if (first) first.focus();
+      }
+      function closeModal() {
+        overlay.classList.remove("is-open");
+        overlay.hidden = true;
+        document.body.style.overflow = "";
+      }
+
+      document.querySelectorAll(".js-partner-open").forEach(function (el) {
+        el.addEventListener("click", openModal);
+      });
+      document.getElementById("partner-close").addEventListener("click", closeModal);
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) closeModal();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && overlay.classList.contains("is-open")) closeModal();
+      });
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        err.classList.remove("is-on");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending…";
+        var endpoint = form.getAttribute("action");
+        var usingPlaceholder = /YOUR_FORM_ID/.test(endpoint);
+
+        function succeed() {
+          window.open(PDF_URL, "_blank", "noopener");
+          closeModal();
+          form.reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send and view partner options";
+        }
+
+        if (usingPlaceholder) {
+          succeed();
+          return;
+        }
+
+        fetch(endpoint, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" }
+        }).then(function (res) {
+          if (!res.ok) throw new Error("bad status");
+          succeed();
+        }).catch(function () {
+          err.classList.add("is-on");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send and view partner options";
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
- 
