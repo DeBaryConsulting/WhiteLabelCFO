@@ -174,8 +174,8 @@
     .row a, .row b { color: #fff; font-weight: 500; }
     .contact-panel .btn { background: #fff; color: #111; border-color: #fff; margin-right: .5rem; margin-top: .4rem; }
     .contact-panel .btn-ghost { background: transparent; color: #fff; border-color: #666; }
-    .side { border: 1px solid var(--line); padding: 2rem 1.6rem; background: var(--wash); }
-    .side h3 { font-family: var(--serif); font-size: 1.45rem; margin: .7rem 0 .8rem; max-width: 22ch; }
+    .side { border: 1px solid var(--line); padding: 0; background: var(--wash); overflow: hidden; }
+    .calendly-inline-widget { min-width: 320px; height: 620px; }
 
     footer {
       padding: 1.4rem 0 2.2rem;
@@ -190,6 +190,7 @@
     }
     @media (max-width: 520px) {
       .hero-actions, .contact-panel .btn { width: 100%; }
+      .calendly-inline-widget { min-width: 0; height: 700px; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -393,9 +394,7 @@
           <a class="btn btn-ghost js-partner-open" href="#partner-form">See partner options</a>
         </div>
         <div class="side">
-          <span class="tag">Confidential</span>
-          <h3>No client poaching. Built for firms that already have the relationship.</h3>
-          <p>This page is for bookkeepers and CPAs who want a reliable outside bench for finance and analytics work. Referrals stay referrals. White-label work stays under your brand.</p>
+          <div class="calendly-inline-widget" data-url="https://calendly.com/whitelabelcfo/30min"></div>
         </div>
       </div>
     </section>
@@ -536,5 +535,6 @@
       });
     })();
   </script>
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
