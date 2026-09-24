@@ -463,8 +463,8 @@
         <div id="owner-step-2" hidden>
           <div class="form-grid">
             <div class="field full">
-              <label for="owner_industry">What industry is your business in? <span class="req">*</span></label>
-              <input id="owner_industry" name="industry" type="text" required />
+              <label for="owner_industry">What industry is your business in? <span class="opt">optional</span></label>
+              <input id="owner_industry" name="industry" type="text" />
             </div>
             <div class="field full">
               <label for="owner_revenue">Is your annual revenue under or over $1 million? <span class="opt">optional</span></label>
@@ -492,7 +492,7 @@
         </div>
         <p class="form-error" id="owner-form-error">Something went wrong sending the form. Check the fields and try again.</p>
         <button class="btn" type="button" id="owner-next">Next</button>
-        <button class="btn" type="submit" id="owner-submit" hidden>Request a Conversation</button>
+        <button class="btn" type="submit" id="owner-submit" hidden>Submit</button>
         <p class="form-note">Required fields are marked. We do not share this information.</p>
       </form>
     </div>
@@ -562,6 +562,7 @@
   </footer>
   <script>
     (function () {
+      var OWNER_PDF_URL = "Micro%20CFO%20Options%20for%20Small%20Businesses.pdf";
       var ownerOverlay = document.getElementById("owner-modal");
       var ownerForm = document.getElementById("owner-form");
       var ownerStep1 = document.getElementById("owner-step-1");
@@ -571,6 +572,17 @@
       var ownerSubmit = document.getElementById("owner-submit");
       var ownerError = document.getElementById("owner-form-error");
 
+      function resetOwnerForm() {
+        ownerForm.reset();
+        ownerStep1.hidden = false;
+        ownerStep2.hidden = true;
+        ownerStepLabel.textContent = "Step 1 of 2 — About Your Business";
+        ownerNext.hidden = false;
+        ownerSubmit.hidden = true;
+        ownerSubmit.disabled = false;
+        ownerSubmit.textContent = "Submit";
+        ownerError.classList.remove("is-on");
+      }
       function openOwnerModal(e) {
         if (e) e.preventDefault();
         ownerOverlay.hidden = false;
@@ -584,8 +596,8 @@
         document.body.style.overflow = "";
       }
       document.querySelectorAll(".js-owner-open").forEach(function (el) { el.addEventListener("click", openOwnerModal); });
-      document.getElementById("owner-close").addEventListener("click", closeOwnerModal);
-      ownerOverlay.addEventListener("click", function (e) { if (e.target === ownerOverlay) closeOwnerModal(); });
+      document.getElementById("owner-close").addEventListener("click", function () { closeOwnerModal(); resetOwnerForm(); });
+      ownerOverlay.addEventListener("click", function (e) { if (e.target === ownerOverlay) { closeOwnerModal(); resetOwnerForm(); } });
       ownerNext.addEventListener("click", function () {
         var fields = ownerStep1.querySelectorAll("input[required]");
         for (var i = 0; i < fields.length; i++) {
@@ -610,19 +622,13 @@
           headers: { Accept: "application/json" }
         }).then(function (res) {
           if (!res.ok) throw new Error("bad status");
+          window.open(OWNER_PDF_URL, "_blank", "noopener");
           closeOwnerModal();
-          ownerForm.reset();
-          ownerStep1.hidden = false;
-          ownerStep2.hidden = true;
-          ownerStepLabel.textContent = "Step 1 of 2 — About Your Business";
-          ownerNext.hidden = false;
-          ownerSubmit.hidden = true;
-          ownerSubmit.disabled = false;
-          ownerSubmit.textContent = "Request a Conversation";
+          resetOwnerForm();
         }).catch(function () {
           ownerError.classList.add("is-on");
           ownerSubmit.disabled = false;
-          ownerSubmit.textContent = "Request a Conversation";
+          ownerSubmit.textContent = "Submit";
         });
       });
 
