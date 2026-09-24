@@ -9,7 +9,6 @@
   <meta property="og:description" content="Add senior finance support to your book of business without adding headcount." />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#111111" />
-  <link rel="icon" type="image/png" href="thecfo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -73,6 +72,8 @@
       font-size: .72rem;
     }
     .brand img { width: 40px; height: 40px; object-fit: contain; }
+    .nav-actions { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+
     nav { display: flex; gap: 1.4rem; align-items: center; }
     nav a { font-size: .82rem; color: var(--muted); letter-spacing: .02em; }
     nav a:hover { color: var(--ink); }
@@ -227,6 +228,11 @@
       min-height: 42px; padding: 0 .7rem;
       border: 1.5px solid var(--ink); font-family: var(--sans); font-size: .92rem; background: #fff;
     }
+    .form-step { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin: 0 0 .8rem; }
+    .field textarea {
+      min-height: 100px; padding: .65rem .7rem;
+      border: 1.5px solid var(--ink); font-family: var(--sans); font-size: .92rem; background: #fff; resize: vertical;
+    }
     .form-error { display: none; color: #8a1f1f; font-size: .85rem; margin: .4rem 0; }
     .form-error.is-on { display: block; }
     .modal .btn { width: 100%; margin-top: .6rem; }
@@ -250,7 +256,10 @@
         <a href="#process">Process</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a class="btn js-partner-open" href="#partner-form">Become a Partner</a>
+      <div class="nav-actions">
+        <a class="btn js-owner-open" href="#business-owners">For Business Owners</a>
+        <a class="btn js-partner-open" href="#partner-form">Become a Partner</a>
+      </div>
     </div>
   </header>
 
@@ -274,6 +283,29 @@
             <p>Built for firms that want to extend the client offering without hiring a full-time finance team.</p>
           </div>
         </aside>
+      </div>
+    </section>
+
+    <section id="business-owners">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">For business owners</p>
+          <h2>Micro CFO Support for Small Businesses</h2>
+        </div>
+        <div class="split">
+          <article class="card">
+            <span class="tag">Micro CFO</span>
+            <h3>Clear financial support for the decisions in front of your business.</h3>
+            <p>Get practical help with cash flow, financial reporting, profitability, budgeting, pricing, and planning—without hiring a full-time finance executive.</p>
+            <a class="btn js-owner-open" href="#owner-form">Request a conversation</a>
+          </article>
+          <article class="card">
+            <span class="tag">Options</span>
+            <h3>See what Micro CFO support can look like.</h3>
+            <p>Explore options designed to help small business owners gain clearer financial visibility and make better-informed decisions.</p>
+            <a class="btn btn-ghost" href="Micro%20CFO%20Options%20for%20Small%20Businesses.pdf" target="_blank" rel="noopener">View Micro CFO options</a>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -401,6 +433,71 @@
     </section>
   </main>
 
+  <div class="modal-overlay" id="owner-modal" role="dialog" aria-modal="true" aria-labelledby="owner-title" hidden>
+    <div class="modal">
+      <button type="button" class="modal-close" id="owner-close" aria-label="Close">&times;</button>
+      <p class="kicker">For business owners</p>
+      <h2 id="owner-title">Explore Micro CFO Support</h2>
+      <p class="lead-s">Tell us a little about your business. We will review your information and follow up to discuss whether Micro CFO support is a fit.</p>
+      <form id="owner-form" action="https://formspree.io/f/xkjgnkkn" method="POST">
+        <input type="hidden" name="_subject" value="Micro CFO business owner request" />
+        <p class="form-step" id="owner-step-label">Step 1 of 2 — About Your Business</p>
+        <div class="form-grid" id="owner-step-1">
+          <div class="field full">
+            <label for="owner_name">Your name <span class="req">*</span></label>
+            <input id="owner_name" name="name" type="text" required autocomplete="name" />
+          </div>
+          <div class="field full">
+            <label for="owner_business_name">Business name <span class="req">*</span></label>
+            <input id="owner_business_name" name="business_name" type="text" required autocomplete="organization" />
+          </div>
+          <div class="field full">
+            <label for="owner_email">Email address <span class="req">*</span></label>
+            <input id="owner_email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div class="field full">
+            <label for="owner_phone">Phone <span class="opt">optional</span></label>
+            <input id="owner_phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+        </div>
+        <div id="owner-step-2" hidden>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="owner_industry">What industry is your business in? <span class="req">*</span></label>
+              <input id="owner_industry" name="industry" type="text" required />
+            </div>
+            <div class="field full">
+              <label for="owner_revenue">Is your annual revenue under or over $1 million? <span class="opt">optional</span></label>
+              <select id="owner_revenue" name="annual_revenue">
+                <option value="">Select one</option>
+                <option>Under $1 million</option>
+                <option>Over $1 million</option>
+                <option>Prefer not to say</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="owner_employees">How many employees does your business have? <span class="opt">optional</span></label>
+              <select id="owner_employees" name="employees">
+                <option value="">Select one</option>
+                <option>Just me</option>
+                <option>2–10 employees</option>
+                <option>More than 10 employees</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="owner_help">What are you looking for help with? <span class="opt">optional</span></label>
+              <textarea id="owner_help" name="help_needed" rows="4" placeholder="For example: cash-flow planning, financial reporting, profitability, budgeting, pricing, bookkeeping cleanup, or a decision you are currently facing."></textarea>
+            </div>
+          </div>
+        </div>
+        <p class="form-error" id="owner-form-error">Something went wrong sending the form. Check the fields and try again.</p>
+        <button class="btn" type="button" id="owner-next">Next</button>
+        <button class="btn" type="submit" id="owner-submit" hidden>Request a Conversation</button>
+        <p class="form-note">Required fields are marked. We do not share this information.</p>
+      </form>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="partner-modal" role="dialog" aria-modal="true" aria-labelledby="partner-title" hidden>
     <div class="modal">
       <button type="button" class="modal-close" id="partner-close" aria-label="Close">&times;</button>
@@ -465,6 +562,70 @@
   </footer>
   <script>
     (function () {
+      var ownerOverlay = document.getElementById("owner-modal");
+      var ownerForm = document.getElementById("owner-form");
+      var ownerStep1 = document.getElementById("owner-step-1");
+      var ownerStep2 = document.getElementById("owner-step-2");
+      var ownerStepLabel = document.getElementById("owner-step-label");
+      var ownerNext = document.getElementById("owner-next");
+      var ownerSubmit = document.getElementById("owner-submit");
+      var ownerError = document.getElementById("owner-form-error");
+
+      function openOwnerModal(e) {
+        if (e) e.preventDefault();
+        ownerOverlay.hidden = false;
+        ownerOverlay.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+        document.getElementById("owner_name").focus();
+      }
+      function closeOwnerModal() {
+        ownerOverlay.classList.remove("is-open");
+        ownerOverlay.hidden = true;
+        document.body.style.overflow = "";
+      }
+      document.querySelectorAll(".js-owner-open").forEach(function (el) { el.addEventListener("click", openOwnerModal); });
+      document.getElementById("owner-close").addEventListener("click", closeOwnerModal);
+      ownerOverlay.addEventListener("click", function (e) { if (e.target === ownerOverlay) closeOwnerModal(); });
+      ownerNext.addEventListener("click", function () {
+        var fields = ownerStep1.querySelectorAll("input[required]");
+        for (var i = 0; i < fields.length; i++) {
+          if (!fields[i].checkValidity()) { fields[i].reportValidity(); return; }
+        }
+        ownerStep1.hidden = true;
+        ownerStep2.hidden = false;
+        ownerStepLabel.textContent = "Step 2 of 2 — What You Need";
+        ownerNext.hidden = true;
+        ownerSubmit.hidden = false;
+        document.getElementById("owner_industry").focus();
+      });
+      ownerForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        ownerError.classList.remove("is-on");
+        if (!ownerForm.checkValidity()) { ownerForm.reportValidity(); return; }
+        ownerSubmit.disabled = true;
+        ownerSubmit.textContent = "Sending…";
+        fetch(ownerForm.getAttribute("action"), {
+          method: "POST",
+          body: new FormData(ownerForm),
+          headers: { Accept: "application/json" }
+        }).then(function (res) {
+          if (!res.ok) throw new Error("bad status");
+          closeOwnerModal();
+          ownerForm.reset();
+          ownerStep1.hidden = false;
+          ownerStep2.hidden = true;
+          ownerStepLabel.textContent = "Step 1 of 2 — About Your Business";
+          ownerNext.hidden = false;
+          ownerSubmit.hidden = true;
+          ownerSubmit.disabled = false;
+          ownerSubmit.textContent = "Request a Conversation";
+        }).catch(function () {
+          ownerError.classList.add("is-on");
+          ownerSubmit.disabled = false;
+          ownerSubmit.textContent = "Request a Conversation";
+        });
+      });
+
       var PDF_URL = "White_Label_CFO_Partner_Options.pdf";
       var overlay = document.getElementById("partner-modal");
       var form = document.getElementById("partner-form");
