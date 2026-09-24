@@ -228,7 +228,6 @@
       min-height: 42px; padding: 0 .7rem;
       border: 1.5px solid var(--ink); font-family: var(--sans); font-size: .92rem; background: #fff;
     }
-    .form-step { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--muted); margin: 0 0 .8rem; }
     .field textarea {
       min-height: 100px; padding: .65rem .7rem;
       border: 1.5px solid var(--ink); font-family: var(--sans); font-size: .92rem; background: #fff; resize: vertical;
@@ -441,8 +440,7 @@
       <p class="lead-s">Tell us a little about your business. We will review your information and follow up to discuss whether Micro CFO support is a fit.</p>
       <form id="owner-form" action="https://formspree.io/f/xkjgnkkn" method="POST">
         <input type="hidden" name="_subject" value="Micro CFO business owner request" />
-        <p class="form-step" id="owner-step-label">Step 1 of 2 — About Your Business</p>
-        <div class="form-grid" id="owner-step-1">
+        <div class="form-grid">
           <div class="field full">
             <label for="owner_name">Your name <span class="req">*</span></label>
             <input id="owner_name" name="name" type="text" required autocomplete="name" />
@@ -459,40 +457,35 @@
             <label for="owner_phone">Phone <span class="opt">optional</span></label>
             <input id="owner_phone" name="phone" type="tel" autocomplete="tel" />
           </div>
-        </div>
-        <div id="owner-step-2" hidden>
-          <div class="form-grid">
-            <div class="field full">
-              <label for="owner_industry">What industry is your business in? <span class="opt">optional</span></label>
-              <input id="owner_industry" name="industry" type="text" />
-            </div>
-            <div class="field full">
-              <label for="owner_revenue">Is your annual revenue under or over $1 million? <span class="opt">optional</span></label>
-              <select id="owner_revenue" name="annual_revenue">
-                <option value="">Select one</option>
-                <option>Under $1 million</option>
-                <option>Over $1 million</option>
-                <option>Prefer not to say</option>
-              </select>
-            </div>
-            <div class="field full">
-              <label for="owner_employees">How many employees does your business have? <span class="opt">optional</span></label>
-              <select id="owner_employees" name="employees">
-                <option value="">Select one</option>
-                <option>Just me</option>
-                <option>2–10 employees</option>
-                <option>More than 10 employees</option>
-              </select>
-            </div>
-            <div class="field full">
-              <label for="owner_help">What are you looking for help with? <span class="opt">optional</span></label>
-              <textarea id="owner_help" name="help_needed" rows="4" placeholder="For example: cash-flow planning, financial reporting, profitability, budgeting, pricing, bookkeeping cleanup, or a decision you are currently facing."></textarea>
-            </div>
+          <div class="field full">
+            <label for="owner_industry">What industry is your business in? <span class="opt">optional</span></label>
+            <input id="owner_industry" name="industry" type="text" />
+          </div>
+          <div class="field full">
+            <label for="owner_revenue">Is your annual revenue under or over $1 million? <span class="opt">optional</span></label>
+            <select id="owner_revenue" name="annual_revenue">
+              <option value="">Select one</option>
+              <option>Under $1 million</option>
+              <option>Over $1 million</option>
+              <option>Prefer not to say</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="owner_employees">How many employees does your business have? <span class="opt">optional</span></label>
+            <select id="owner_employees" name="employees">
+              <option value="">Select one</option>
+              <option>Just me</option>
+              <option>2–10 employees</option>
+              <option>More than 10 employees</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="owner_help">What are you looking for help with? <span class="opt">optional</span></label>
+            <textarea id="owner_help" name="help_needed" rows="4" placeholder="For example: cash-flow planning, financial reporting, profitability, budgeting, pricing, bookkeeping cleanup, or a decision you are currently facing."></textarea>
           </div>
         </div>
         <p class="form-error" id="owner-form-error">Something went wrong sending the form. Check the fields and try again.</p>
-        <button class="btn" type="button" id="owner-next">Next</button>
-        <button class="btn" type="submit" id="owner-submit" hidden>Submit</button>
+        <button class="btn" type="submit" id="owner-submit">Submit</button>
         <p class="form-note">Required fields are marked. We do not share this information.</p>
       </form>
     </div>
@@ -565,24 +558,9 @@
       var OWNER_PDF_URL = "Micro%20CFO%20Options%20for%20Small%20Businesses.pdf";
       var ownerOverlay = document.getElementById("owner-modal");
       var ownerForm = document.getElementById("owner-form");
-      var ownerStep1 = document.getElementById("owner-step-1");
-      var ownerStep2 = document.getElementById("owner-step-2");
-      var ownerStepLabel = document.getElementById("owner-step-label");
-      var ownerNext = document.getElementById("owner-next");
       var ownerSubmit = document.getElementById("owner-submit");
       var ownerError = document.getElementById("owner-form-error");
 
-      function resetOwnerForm() {
-        ownerForm.reset();
-        ownerStep1.hidden = false;
-        ownerStep2.hidden = true;
-        ownerStepLabel.textContent = "Step 1 of 2 — About Your Business";
-        ownerNext.hidden = false;
-        ownerSubmit.hidden = true;
-        ownerSubmit.disabled = false;
-        ownerSubmit.textContent = "Submit";
-        ownerError.classList.remove("is-on");
-      }
       function openOwnerModal(e) {
         if (e) e.preventDefault();
         ownerOverlay.hidden = false;
@@ -596,20 +574,8 @@
         document.body.style.overflow = "";
       }
       document.querySelectorAll(".js-owner-open").forEach(function (el) { el.addEventListener("click", openOwnerModal); });
-      document.getElementById("owner-close").addEventListener("click", function () { closeOwnerModal(); resetOwnerForm(); });
-      ownerOverlay.addEventListener("click", function (e) { if (e.target === ownerOverlay) { closeOwnerModal(); resetOwnerForm(); } });
-      ownerNext.addEventListener("click", function () {
-        var fields = ownerStep1.querySelectorAll("input[required]");
-        for (var i = 0; i < fields.length; i++) {
-          if (!fields[i].checkValidity()) { fields[i].reportValidity(); return; }
-        }
-        ownerStep1.hidden = true;
-        ownerStep2.hidden = false;
-        ownerStepLabel.textContent = "Step 2 of 2 — What You Need";
-        ownerNext.hidden = true;
-        ownerSubmit.hidden = false;
-        document.getElementById("owner_industry").focus();
-      });
+      document.getElementById("owner-close").addEventListener("click", closeOwnerModal);
+      ownerOverlay.addEventListener("click", function (e) { if (e.target === ownerOverlay) closeOwnerModal(); });
       ownerForm.addEventListener("submit", function (e) {
         e.preventDefault();
         ownerError.classList.remove("is-on");
@@ -624,7 +590,9 @@
           if (!res.ok) throw new Error("bad status");
           window.open(OWNER_PDF_URL, "_blank", "noopener");
           closeOwnerModal();
-          resetOwnerForm();
+          ownerForm.reset();
+          ownerSubmit.disabled = false;
+          ownerSubmit.textContent = "Submit";
         }).catch(function () {
           ownerError.classList.add("is-on");
           ownerSubmit.disabled = false;
