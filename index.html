@@ -228,10 +228,7 @@
       min-height: 42px; padding: 0 .7rem;
       border: 1.5px solid var(--ink); font-family: var(--sans); font-size: .92rem; background: #fff;
     }
-    .field textarea {
-      min-height: 100px; padding: .65rem .7rem;
-      border: 1.5px solid var(--ink); font-family: var(--sans); font-size: .92rem; background: #fff; resize: vertical;
-    }
+    .field textarea { min-height: 100px; padding: .65rem .7rem; border: 1.5px solid var(--ink); font-family: var(--sans); font-size: .92rem; background: #fff; resize: vertical; }
     .form-error { display: none; color: #8a1f1f; font-size: .85rem; margin: .4rem 0; }
     .form-error.is-on { display: block; }
     .modal .btn { width: 100%; margin-top: .6rem; }
@@ -250,15 +247,16 @@
         WHITE LABEL CFO
       </a>
       <nav aria-label="Primary">
+        <a href="/microCFO/">Micro CFO</a>
         <a href="#partners">Partners</a>
         <a href="#services">Services</a>
         <a href="#process">Process</a>
         <a href="#contact">Contact</a>
       </nav>
-<div class="nav-actions">
-  <a class="btn js-partner-open" href="#partner-form">Become a Partner</a>
-  <a class="btn js-owner-open" href="#business-owners">For Business Owners</a>
-</div>
+      <div class="nav-actions">
+        <a class="btn js-partner-open" href="#partner-form">Become a Partner</a>
+        <a class="btn js-owner-open" href="#business-owners">For Business Owners</a>
+      </div>
     </div>
   </header>
 
@@ -441,48 +439,14 @@
       <form id="owner-form" action="https://formspree.io/f/xkjgnkkn" method="POST">
         <input type="hidden" name="_subject" value="Micro CFO business owner request" />
         <div class="form-grid">
-          <div class="field full">
-            <label for="owner_name">Your name <span class="req">*</span></label>
-            <input id="owner_name" name="name" type="text" required autocomplete="name" />
-          </div>
-          <div class="field full">
-            <label for="owner_business_name">Business name <span class="req">*</span></label>
-            <input id="owner_business_name" name="business_name" type="text" required autocomplete="organization" />
-          </div>
-          <div class="field full">
-            <label for="owner_email">Email address <span class="req">*</span></label>
-            <input id="owner_email" name="email" type="email" required autocomplete="email" />
-          </div>
-          <div class="field full">
-            <label for="owner_phone">Phone <span class="opt">optional</span></label>
-            <input id="owner_phone" name="phone" type="tel" autocomplete="tel" />
-          </div>
-          <div class="field full">
-            <label for="owner_industry">What industry is your business in? <span class="opt">optional</span></label>
-            <input id="owner_industry" name="industry" type="text" />
-          </div>
-          <div class="field full">
-            <label for="owner_revenue">Is your annual revenue under or over $1 million? <span class="opt">optional</span></label>
-            <select id="owner_revenue" name="annual_revenue">
-              <option value="">Select one</option>
-              <option>Under $1 million</option>
-              <option>Over $1 million</option>
-              <option>Prefer not to say</option>
-            </select>
-          </div>
-          <div class="field full">
-            <label for="owner_employees">How many employees does your business have? <span class="opt">optional</span></label>
-            <select id="owner_employees" name="employees">
-              <option value="">Select one</option>
-              <option>Just me</option>
-              <option>2–10 employees</option>
-              <option>More than 10 employees</option>
-            </select>
-          </div>
-          <div class="field full">
-            <label for="owner_help">What are you looking for help with? <span class="opt">optional</span></label>
-            <textarea id="owner_help" name="help_needed" rows="4" placeholder="For example: cash-flow planning, financial reporting, profitability, budgeting, pricing, bookkeeping cleanup, or a decision you are currently facing."></textarea>
-          </div>
+          <div class="field full"><label for="owner_name">Your name <span class="req">*</span></label><input id="owner_name" name="name" type="text" required autocomplete="name" /></div>
+          <div class="field full"><label for="owner_business_name">Business name <span class="req">*</span></label><input id="owner_business_name" name="business_name" type="text" required autocomplete="organization" /></div>
+          <div class="field full"><label for="owner_email">Email address <span class="req">*</span></label><input id="owner_email" name="email" type="email" required autocomplete="email" /></div>
+          <div class="field full"><label for="owner_phone">Phone <span class="opt">optional</span></label><input id="owner_phone" name="phone" type="tel" autocomplete="tel" /></div>
+          <div class="field full"><label for="owner_industry">What industry is your business in? <span class="opt">optional</span></label><input id="owner_industry" name="industry" type="text" /></div>
+          <div class="field full"><label for="owner_revenue">Is your annual revenue under or over $1 million? <span class="opt">optional</span></label><select id="owner_revenue" name="annual_revenue"><option value="">Select one</option><option>Under $1 million</option><option>Over $1 million</option><option>Prefer not to say</option></select></div>
+          <div class="field full"><label for="owner_employees">How many employees does your business have? <span class="opt">optional</span></label><select id="owner_employees" name="employees"><option value="">Select one</option><option>Just me</option><option>2–10 employees</option><option>More than 10 employees</option></select></div>
+          <div class="field full"><label for="owner_help">What are you looking for help with? <span class="opt">optional</span></label><textarea id="owner_help" name="help_needed" rows="4" placeholder="For example: cash-flow planning, financial reporting, profitability, budgeting, pricing, bookkeeping cleanup, or a decision you are currently facing."></textarea></div>
         </div>
         <p class="form-error" id="owner-form-error">Something went wrong sending the form. Check the fields and try again.</p>
         <button class="btn" type="submit" id="owner-submit">Submit</button>
@@ -560,44 +524,18 @@
       var ownerForm = document.getElementById("owner-form");
       var ownerSubmit = document.getElementById("owner-submit");
       var ownerError = document.getElementById("owner-form-error");
-
-      function openOwnerModal(e) {
-        if (e) e.preventDefault();
-        ownerOverlay.hidden = false;
-        ownerOverlay.classList.add("is-open");
-        document.body.style.overflow = "hidden";
-        document.getElementById("owner_name").focus();
-      }
-      function closeOwnerModal() {
-        ownerOverlay.classList.remove("is-open");
-        ownerOverlay.hidden = true;
-        document.body.style.overflow = "";
-      }
+      function openOwnerModal(e) { if (e) e.preventDefault(); ownerOverlay.hidden = false; ownerOverlay.classList.add("is-open"); document.body.style.overflow = "hidden"; document.getElementById("owner_name").focus(); }
+      function closeOwnerModal() { ownerOverlay.classList.remove("is-open"); ownerOverlay.hidden = true; document.body.style.overflow = ""; }
       document.querySelectorAll(".js-owner-open").forEach(function (el) { el.addEventListener("click", openOwnerModal); });
       document.getElementById("owner-close").addEventListener("click", closeOwnerModal);
       ownerOverlay.addEventListener("click", function (e) { if (e.target === ownerOverlay) closeOwnerModal(); });
       ownerForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        ownerError.classList.remove("is-on");
+        e.preventDefault(); ownerError.classList.remove("is-on");
         if (!ownerForm.checkValidity()) { ownerForm.reportValidity(); return; }
-        ownerSubmit.disabled = true;
-        ownerSubmit.textContent = "Sending…";
-        fetch(ownerForm.getAttribute("action"), {
-          method: "POST",
-          body: new FormData(ownerForm),
-          headers: { Accept: "application/json" }
-        }).then(function (res) {
-          if (!res.ok) throw new Error("bad status");
-          window.open(OWNER_PDF_URL, "_blank", "noopener");
-          closeOwnerModal();
-          ownerForm.reset();
-          ownerSubmit.disabled = false;
-          ownerSubmit.textContent = "Submit";
-        }).catch(function () {
-          ownerError.classList.add("is-on");
-          ownerSubmit.disabled = false;
-          ownerSubmit.textContent = "Submit";
-        });
+        ownerSubmit.disabled = true; ownerSubmit.textContent = "Sending…";
+        fetch(ownerForm.getAttribute("action"), { method: "POST", body: new FormData(ownerForm), headers: { Accept: "application/json" } })
+          .then(function (res) { if (!res.ok) throw new Error("bad status"); window.open(OWNER_PDF_URL, "_blank", "noopener"); closeOwnerModal(); ownerForm.reset(); ownerSubmit.disabled = false; ownerSubmit.textContent = "Submit"; })
+          .catch(function () { ownerError.classList.add("is-on"); ownerSubmit.disabled = false; ownerSubmit.textContent = "Submit"; });
       });
 
       var PDF_URL = "White_Label_CFO_Partner_Options.pdf";
